@@ -10,42 +10,36 @@ int32_t linear_search(void* arr,
                       size_t size,  
                       size_t len, 
                       void* val, 
-                      Compare cmp,
-                      bool* match,
-                      size_t* index)
+                      Compare cmp)
 {
-    int32_t status = -1;
-
-    size_t i = 0U;
+    int32_t i = -1;
     int32_t compare = -1;
     bool found = false;
     bool okay = false;
     char* arr_ptr = (char*)arr;
 
-
     okay = (arr != NULL);
     okay = (okay && (val != NULL));
     okay = (okay && (cmp != NULL));
     okay = (okay && (index != NULL));
-    status = (okay ? 0 : -1);
+    i = (okay ? 0 : -1);
 
     if (okay)
     {
-        for (i = 0U; i < len; i++)
+        for (i = 0; i < (int32_t)len; i++)
         {
             cmp((void *)arr_ptr, val, &compare);
-            
+
             if (compare == 0)
             {
                 found = true;
                 break;
             }
-            arr_ptr++;
+            arr_ptr += size;
         }
-        *match = found;
-        *index = i;
-    }
 
-    return status;
+        i = (found ? i : -1);
+    }
+    return i;
 }
 
